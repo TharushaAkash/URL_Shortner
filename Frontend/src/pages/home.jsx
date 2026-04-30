@@ -2,6 +2,7 @@ import { use, useState } from "react";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import Header from "../Components/header";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 
 
@@ -15,11 +16,30 @@ export default function HomePage(){
     }
 
     async function handleSubmit() {
-        console.log(`url is: ${url}`)
 
-        await axios()
-        setShowModel(true);
-    }
+        try{
+            console.log(`url is: ${url}`)
+
+            const response = await axios.post(import.meta.env.VITE_API_URI + "/url" , 
+                {
+                    long_url: url
+                }
+            )
+
+            if(response){
+                console.log(`url: ${response.data.url}`)
+                setUrl(response.data.url)
+                setShowModel(true);
+                toast.success(response.data.message);
+                
+            }
+            }catch(err){
+                toast.error(err.response.data.message);
+
+            }
+        
+        }
+
         
 
 
