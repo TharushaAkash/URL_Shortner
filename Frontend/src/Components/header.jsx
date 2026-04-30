@@ -18,7 +18,11 @@ export default function Header() {
       <nav className="flex justify-center">
         <ul className="flex gap-10">
           <li className="cursor-pointer bg-gradient-to-r from-blue-600 to-violet-600  p-2 rounded-md hover:text-white hover:bg-none hover:border-2 hover:border-blue-600">Home</li>
-          <li className="cursor-pointer bg-gradient-to-r from-blue-600 to-violet-600  p-2 rounded-md hover:text-white hover:bg-none hover:border-2 hover:border-blue-600">Contact</li>
+          <li className="cursor-pointer bg-gradient-to-r from-blue-600 to-violet-600  p-2 rounded-md hover:text-white hover:bg-none hover:border-2 hover:border-blue-600">
+            <a href="https://github.com/TharushaAkash/URL_Shortner.git" target="_blank">
+            Contact
+            </a>
+            </li>
         </ul>
       </nav>
 
