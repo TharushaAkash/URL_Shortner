@@ -21,7 +21,7 @@ mongoose.connect(mongo_url).then(() =>{
 });
 
 
-app.use('/url', url_router)
+app.use('/', url_router)
 
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`)

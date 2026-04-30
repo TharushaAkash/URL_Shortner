@@ -20,7 +20,7 @@ export default function HomePage(){
         try{
             console.log(`url is: ${url}`)
 
-            const response = await axios.post(import.meta.env.VITE_API_URI + "/url" , 
+            const response = await axios.post(import.meta.env.VITE_API_URI , 
                 {
                     long_url: url
                 }

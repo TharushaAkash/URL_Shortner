@@ -17,7 +17,7 @@ export async function createUrl(req, res){
         })
         res.status(201).json(
             {
-                url: `process.env.BASE_URL/${short_url}`
+                url: `${process.env.BASE_URL}/${short_url}`
             }
         )
 
