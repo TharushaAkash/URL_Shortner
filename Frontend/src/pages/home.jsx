@@ -78,6 +78,8 @@ export default function HomePage(){
                             onClick={()=> {
                                 navigator.clipboard.writeText(url);
                                 setShowModel(false);
+                                setUrl("");
+                                toast.success("URL Copied!");
                             }
                             }
                             className="w-[100px] bg-[#2F2FE4] rounded-xl p-2 mt-3 text-white font-bold cursor-pointer hover:bg-transparent hover:text-[#2F2FE4] hover:border-2 hover:border-[#2F2FE4]"
@@ -113,8 +115,8 @@ export default function HomePage(){
                         <input
                             type="text"
                             placeholder="Paste your url!"
-                            name="url"
                             value={url}
+                            name="url"
                             onChange={handleChange}
                             required
                          className="p-2 ml-3 border-2 border-amber-300 rounded-xl focus:outline-none focus:ring-amber-300">
