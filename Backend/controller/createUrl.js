@@ -18,7 +18,7 @@ export async function createUrl(req, res){
         res.status(201).json(
             {
                 url: `${process.env.BASE_URL}/${short_url}`,
-                message: "Url created successfully"
+                message: "Url created successfully",
             }
         )
 
