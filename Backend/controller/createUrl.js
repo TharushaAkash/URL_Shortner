@@ -17,14 +17,15 @@ export async function createUrl(req, res){
         })
         res.status(201).json(
             {
-                url: `${process.env.BASE_URL}/${short_url}`
+                url: `${process.env.BASE_URL}/${short_url}`,
+                message: "Url created successfully"
             }
         )
 
     }catch(err){
         res.status(500).json(
             {
-                error: err.message
+                message: err.message
 
             });
     
@@ -42,14 +43,14 @@ export async function redirectUrl(req, res){
 
         res.status(404).json(
             {
-                error: "Url not found"
+                message: "Url not found"
             }
         )
 
     }catch(err){
         res.status(500).json(
             {
-                error: error.message
+                message: error.message
             }
         )
     }
