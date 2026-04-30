@@ -50,7 +50,6 @@ export default function HomePage(){
         
         <div className="flex h-screen">
 
-
             {/* popup model */}
             {showModel && (
                 <div className="flex inset-0 fixed bg-accent justify-center items-center">
@@ -58,9 +57,15 @@ export default function HomePage(){
                     {/* popup Card */}
                     <div className="w-[400px] h-[200px] bg-white text-center rounded-xl p-3 relative">
                         <h2 className="font-bold text-2xl text-[#05df72] mt-2">Shotend URL</h2>
+
+
                         {/* Close button */}
                         <button
-                            onClick={()=> setShowModel(false)}
+                            onClick={()=> 
+                                {
+                                    setShowModel(false);
+                                    setUrl("");
+                                }}
                             className="absolute top-2 right-3 text-3xl text-red-500 cursor-pointer hover:text-red-600"
                             >
                                 <IoCloseCircleSharp />
