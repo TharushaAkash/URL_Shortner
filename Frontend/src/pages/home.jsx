@@ -1,6 +1,8 @@
 import { use, useState } from "react";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import Header from "../Components/header";
+import axios from "axios";
+
 
 
 export default function HomePage(){
@@ -14,6 +16,8 @@ export default function HomePage(){
 
     async function handleSubmit() {
         console.log(`url is: ${url}`)
+
+        await axios()
         setShowModel(true);
     }
         
