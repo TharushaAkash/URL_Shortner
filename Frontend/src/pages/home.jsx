@@ -7,65 +7,87 @@ import { Atom } from "react-loading-indicators";
 
 
 
-export default function HomePage(){
+export default function HomePage() {
 
     const [url, setUrl] = useState("");
     const [showModel, setShowModel] = useState(false)
     const [loading, setLoading] = useState(false);
+    const [expireAt, setExpireAt] = useState("");
+
 
     const handleChange = (e) => {
         setUrl(e.target.value);
     }
 
-    async function handleSubmit() {
+    const handleTime = (e) => {
+        setExpireAt(e.target.value);
+    }
 
-        try{
+
+
+    async function handleSubmit() {
+        try {
             setLoading(true);
             console.log(`url is: ${url}`)
+            console.log(`expire is: ${expireAt}`)  //Dubugging purpose
 
-            const response = await axios.post(import.meta.env.VITE_API_URI , 
+            const response = await axios.post(import.meta.env.VITE_API_URI,
                 {
-                    long_url: url
+                    long_url: url,
+                    expireAt: Number(expireAt)  //Convert to number format
                 }
             )
 
-            if(response){
-                console.log(`url: ${response.data.url}`)
+            // If expire is null not display expire msg
+            if (response.data.expire == null) {
                 setUrl(response.data.url)
-                setTimeout(()=> {
+                setTimeout(() => {
                     setShowModel(true);
                     toast.success(response.data.message);
                 }, 1000);
-                
-                
-            }
-            }catch(err){
-                toast.error(err.response.data.message);
+                return;
 
-            }finally{
-                setTimeout(()=>{
-                    setLoading(false);
-                }, 1000);  //1 second timeout added for better smoot loading animation
             }
-        
+            //Else display expire msg as well
+            if (response) {
+                console.log(`url: ${response.data.url}`)
+                console.log(`expire: ${response.data.expire}`);
+                setUrl(response.data.url)
+                setTimeout(() => {
+                    setShowModel(true);
+                    toast.success(response.data.message);
+                    toast.success(response.data.expire);
+                }, 1000);
+
+
+            }
+        } catch (err) {
+            toast.error(err.response.data.message);
+
+        } finally {
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000);  //1 second timeout added for better smoot loading animation
         }
 
-        
-
-
-    return(
+    }
 
 
 
-        
+
+    return (
+
+
+
+
         <div className="flex h-screen">
 
             {/* loading screen */}
 
-            {loading &&(
+            {loading && (
                 <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
-                    <Atom text="Getting URL...."  style={{ fontSize: "30px", color: "#ffffff", fontWeight: "bold"}}   color={["#32cd32", "#327fcd", "#cd32cd", "#cd8032"]} speedPlus="-2" />
-                    </div>
+                    <Atom text="Getting URL...." style={{ fontSize: "30px", color: "#ffffff", fontWeight: "bold" }} color={["#32cd32", "#327fcd", "#cd32cd", "#cd8032"]} speedPlus="-2" />
+                </div>
             )}
 
             {/* popup model */}
@@ -79,18 +101,17 @@ export default function HomePage(){
 
                         {/* Close button */}
                         <button
-                            onClick={()=> 
-                                {
-                                    setShowModel(false);
-                                    setUrl("");
-                                }}
+                            onClick={() => {
+                                setShowModel(false);
+                                setUrl("");
+                            }}
                             className="absolute top-2 right-3 text-3xl text-red-500 cursor-pointer hover:text-red-600"
-                            >
-                                <IoCloseCircleSharp />
-                            </button>
-                        
+                        >
+                            <IoCloseCircleSharp />
+                        </button>
 
-                        <input 
+
+                        <input
                             value={url}
                             readOnly
                             className="w-full bg-amber-200 border rounded-md p-2 mt-6 border-dashed border-[#2F2FE4] focus:outline-none"
@@ -98,23 +119,24 @@ export default function HomePage(){
 
 
                         <button
-                            onClick={()=> {
+                            onClick={() => {
                                 navigator.clipboard.writeText(url);
                                 setShowModel(false);
                                 setUrl("");
+                                setExpireAt("");
                                 toast.success("URL Copied!");
                             }
                             }
                             className="w-[100px] bg-[#2F2FE4] rounded-xl p-2 mt-3 text-white font-bold cursor-pointer hover:bg-transparent hover:text-[#2F2FE4] hover:border-2 hover:border-[#2F2FE4]"
-                            >
+                        >
                             Copy URL
                         </button>
 
 
                     </div>
 
-                </div> 
-            )}       
+                </div>
+            )}
 
 
 
@@ -124,16 +146,16 @@ export default function HomePage(){
             <div className="w-full h-screen bg-second flex justify-center items-center">
 
                 {/* input card */}
-                <div className="w-[500px] h-[250px] bg-primary rounded-3xl justify">
+                <div className="w-[600px] h-[250px] bg-primary rounded-3xl justify">
 
                     {/* text div */}
                     <div className="text-[#05df72] text-center p-3 font-bold text-2xl">
                         <h1>URL Shortner</h1>
-                    
+
                     </div>
 
                     {/* input div */}
-                    <div className="text-white mt-3 p-3 font-bold flex items-center justify-center">
+                    <div className="text-white mt-3 p-3 font-bold flex items-center justify-center gap-3">
                         <label className="items-center text-[#05df72]">URL:</label>
                         <input
                             type="text"
@@ -142,7 +164,18 @@ export default function HomePage(){
                             name="url"
                             onChange={handleChange}
                             required
-                         className="p-2 ml-3 border-2 border-amber-300 rounded-xl focus:outline-none focus:ring-amber-300">
+                            className="p-2 ml-3 border-2 border-amber-300 rounded-xl focus:outline-none focus:ring-amber-300">
+
+                        </input>
+
+                        <label className=" ml-4 items-center text-[#05df72]">Expire Time:</label>
+                        <input
+                            type="number"
+                            placeholder="Eg: 10"
+                            value={expireAt}
+                            name="expireAt"
+                            onChange={handleTime}
+                            className="w-[90px] p-2 border-2 border-amber-300 rounded-xl focus:outline-none focus:ring-amber-300">
 
                         </input>
                     </div>
@@ -152,7 +185,7 @@ export default function HomePage(){
                     <div className="flex mt-3 justify-center">
                         <button onClick={handleSubmit} className="bg-amber-300 w-[100px] rounded-2xl font-bold p-1 cursor-pointer hover:bg-transparent hover:text-amber-300 hover:border-2 hover:border-amber-300">Get URL</button>
                     </div>
-                    
+
 
                 </div>
 
