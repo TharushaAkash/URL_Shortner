@@ -32,15 +32,20 @@ export default function HomePage(){
             if(response){
                 console.log(`url: ${response.data.url}`)
                 setUrl(response.data.url)
-                setShowModel(true);
-                toast.success(response.data.message);
+                setTimeout(()=> {
+                    setShowModel(true);
+                    toast.success(response.data.message);
+                }, 1000);
+                
                 
             }
             }catch(err){
                 toast.error(err.response.data.message);
 
             }finally{
-                setLoading(false);
+                setTimeout(()=>{
+                    setLoading(false);
+                }, 1000);  //1 second timeout added for better smoot loading animation
             }
         
         }
