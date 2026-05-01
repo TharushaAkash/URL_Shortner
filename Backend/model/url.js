@@ -16,7 +16,7 @@ const urlSchema = new mongoose.Schema(
 
         expireAt: {
             type: Date,
-            index: {expires: 86400}  //Delete data after 1day
+            index: { expires: 86400 }  //Delete data after 1day
         }
     }
 )
