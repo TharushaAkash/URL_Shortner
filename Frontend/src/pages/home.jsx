@@ -3,7 +3,7 @@ import { IoCloseCircleSharp } from "react-icons/io5";
 import Header from "../Components/header";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { LifeLine } from "react-loading-indicators";
+import { Atom } from "react-loading-indicators";
 
 
 
@@ -59,7 +59,7 @@ export default function HomePage(){
 
             {loading &&(
                 <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-                    <LifeLine color="#32cd32" size="medium" text="" textColor="" />
+                    <Atom color={["#32cd32", "#327fcd", "#cd32cd", "#cd8032"]} />
                     </div>
             )}
 
