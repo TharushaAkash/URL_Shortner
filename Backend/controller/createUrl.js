@@ -3,10 +3,10 @@ import Url from "../model/url.js";
 
 
 //Create short code and save in db 
-export async function createUrl(req, res){
-    try{
+export async function createUrl(req, res) {
+    try {
 
-        const {long_url, expireAt} = req.body;
+        const { long_url, expireAt } = req.body;
 
         const short_url = nanoid(5);
 
@@ -16,10 +16,10 @@ export async function createUrl(req, res){
         let expireDate = null;
 
         //expire time exists and its a number convert to date format
-        if(exTime && !isNaN(exTime)){
+        if (exTime && !isNaN(exTime)) {
             expireDate = new Date(Date.now() + exTime * 60 * 1000)
         }
-        
+
         await Url.create({
             long_url: long_url,
             short_url,
@@ -27,7 +27,7 @@ export async function createUrl(req, res){
         })
 
         //If expire time exist, send expire msg as response
-        if(exTime){
+        if (exTime) {
             res.status(201).json(
                 {
                     url: `${process.env.BASE_URL}/${short_url}`,
@@ -37,7 +37,7 @@ export async function createUrl(req, res){
             )
             return;
         }
-        
+
         //Not exist expire time send only message and short url
         res.status(201).json(
             {
@@ -46,24 +46,24 @@ export async function createUrl(req, res){
             }
         )
 
-    }catch(err){
+    } catch (err) {
         res.status(500).json(
             {
                 message: err.message
 
             });
-    
+
     }
 }
 
 
 //Verify the url and give the original url
-export async function redirectUrl(req, res){
-    try{
-        const url = await Url.findOne({short_url: req.params.short_url})
-        
-        if(url){
-            if(url.expireAt && new Date() > url.expireAt){
+export async function redirectUrl(req, res) {
+    try {
+        const url = await Url.findOne({ short_url: req.params.short_url })
+
+        if (url) {
+            if (url.expireAt && new Date() > url.expireAt) {
                 return res.status(404).json(
                     {
                         message: "Url is expired"
@@ -79,7 +79,7 @@ export async function redirectUrl(req, res){
             }
         )
 
-    }catch(err){
+    } catch (err) {
         res.status(500).json(
             {
                 message: err.message
