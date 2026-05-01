@@ -15,7 +15,8 @@ const urlSchema = new mongoose.Schema(
         },
 
         expireAt: {
-            type: Date
+            type: Date,
+            expires: 0
         }
     }
 )
