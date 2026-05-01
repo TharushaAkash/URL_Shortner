@@ -58,8 +58,8 @@ export default function HomePage(){
             {/* loading screen */}
 
             {loading &&(
-                <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-                    <Atom color={["#32cd32", "#327fcd", "#cd32cd", "#cd8032"]} />
+                <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
+                    <Atom color={["#32cd32", "#327fcd", "#cd32cd", "#cd8032"]} speedPlus="-2" />
                     </div>
             )}
 
