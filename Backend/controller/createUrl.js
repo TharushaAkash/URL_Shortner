@@ -61,6 +61,7 @@ export async function createUrl(req, res){
 export async function redirectUrl(req, res){
     try{
         const url = await Url.findOne({short_url: req.params.short_url})
+        
         if(url){
             if(url.expireAt && new Date() > url.expireAt){
                 return res.status(404).json(
