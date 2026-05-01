@@ -64,7 +64,7 @@ export default function HomePage(){
 
             {loading &&(
                 <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
-                    <Atom color={["#32cd32", "#327fcd", "#cd32cd", "#cd8032"]} speedPlus="-2" />
+                    <Atom text="Getting URL...."  style={{ fontSize: "30px", color: "#ffffff", fontWeight: "bold"}}   color={["#32cd32", "#327fcd", "#cd32cd", "#cd8032"]} speedPlus="-2" />
                     </div>
             )}
 
