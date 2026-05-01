@@ -3,7 +3,7 @@
 export default function Header() {
 
   return (
-    <header className="w-full h-[100px] fixed bg-accent flex items-center px-6 text-white">
+    <header className="w-full h-[80px] fixed bg-accent flex items-center px-6 text-white">
       
       {/* Left - Logo */}
       <div className="flex-1">

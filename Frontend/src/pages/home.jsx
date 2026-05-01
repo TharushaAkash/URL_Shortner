@@ -4,6 +4,9 @@ import Header from "../Components/header";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Atom } from "react-loading-indicators";
+import { MdOutlineElectricBolt } from "react-icons/md";
+import { HiOutlineLink } from "react-icons/hi";
+import { FaArrowRight } from "react-icons/fa";
 
 
 
@@ -143,51 +146,62 @@ export default function HomePage() {
 
             <Header />
             {/* background */}
-            <div className="w-full h-screen bg-second flex justify-center items-center">
+            <div className="w-full h-screen bg-second flex flex-col justify-center items-center">
 
-                {/* input card */}
-                <div className="w-[600px] h-[250px] bg-primary rounded-3xl justify">
-
-                    {/* text div */}
-                    <div className="text-[#05df72] text-center p-3 font-bold text-2xl">
-                        <h1>URL Shortner</h1>
-
-                    </div>
-
-                    {/* input div */}
-                    <div className="text-white mt-3 p-3 font-bold flex items-center justify-center gap-3">
-                        <label className="items-center text-[#05df72]">URL:</label>
-                        <input
-                            type="text"
-                            placeholder="Paste your url!"
-                            value={url}
-                            name="url"
-                            onChange={handleChange}
-                            required
-                            className="p-2 ml-3 border-2 border-amber-300 rounded-xl focus:outline-none focus:ring-amber-300">
-
-                        </input>
-
-                        <label className=" ml-4 items-center text-[#05df72]">Expire Time:</label>
-                        <input
-                            type="number"
-                            placeholder="Eg: 10"
-                            value={expireAt}
-                            name="expireAt"
-                            onChange={handleTime}
-                            className="w-[90px] p-2 border-2 border-amber-300 rounded-xl focus:outline-none focus:ring-amber-300">
-
-                        </input>
-                    </div>
-
-                    {/* button div */}
-
-                    <div className="flex mt-3 justify-center">
-                        <button onClick={handleSubmit} className="bg-amber-300 w-[100px] rounded-2xl font-bold p-1 cursor-pointer hover:bg-transparent hover:text-amber-300 hover:border-2 hover:border-amber-300">Get URL</button>
-                    </div>
-
-
+                <div className="text-[#8ec5ff] mt-10 bg-[#1b3061] w-[250px] p-2 rounded-2xl flex gap-6 justify-center items-center">
+                    <MdOutlineElectricBolt/>
+                    <h2 className="font-bold text-[#8ec5ff]">Fast & Free URL Shortene</h2>
                 </div>
+
+               <div className="flex flex-col justify-center items-center mb-20 mt-10">
+                    <h1 className="font-bold text-5xl text-center"><span className="text-white">Free URL Shortner</span><br/>
+                    <span className="text-[#175cfb]">Shorten Links Instantly </span>
+                    </h1>
+
+                    <p className="text-lg text-slate-500 text-l mt-5 text-center w-[700px]">Create short, memorable URLs in seconds. Track clicks with detailed analytics,
+                    generate QR codes 
+                    and manage all your links in one place — completely free.</p>
+                </div>
+
+                {/* Input and button box */}
+                <div className="flex  items-center gap-5">
+
+                    <div className="w-[400px] relative">
+                        <input
+                        type="text"
+                        placeholder="Paste your long url here.."
+                        value={url}
+                        name="url"
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-slate-800 text-white px-5 py-4 rounded-2xl  border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                    </input>
+
+                    <div className="text-slate-400 font-bold absolute right-4 top-1/2 -translate-y-1/2">
+                        <HiOutlineLink />
+                    </div>
+                    </div>
+
+
+                    <button
+                    onClick={handleSubmit} 
+                    className="flex gap-3 bg-[#2158f8] rounded-2xl items-center justify-center w-[150px] h-full text-white relative cursor-pointer hover:bg-transparent hover:border-2 hover:border-[#2158f8] hover:transition-all hover:duration-300">
+                        Shorten URL
+                        <FaArrowRight  className="font-bold text-lg"/>
+                    </button>
+
+
+                 </div>
+                 
+
+
+
+
+
+               
+
+                
 
             </div>
 
