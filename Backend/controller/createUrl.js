@@ -6,15 +6,35 @@ import Url from "../model/url.js";
 export async function createUrl(req, res){
     try{
 
-        const long_url = req.body.long_url;
+        const {long_url, expireAt} = req.body;
 
         const short_url = nanoid(5);
 
+        const exTime = expireAt ? Number(expireAt) : null;
+
+        let expireDate = null;
+
+        if(exTime && !isNaN(exTime)){
+            expireDate = new Date(Date.now() + exTime * 60 * 1000)
+        }
         
         await Url.create({
             long_url: long_url,
-            short_url
+            short_url,
+            expireAt: expireDate
         })
+
+        if(exTime){
+            res.status(201).json(
+                {
+                    url: `${process.env.BASE_URL}/${short_url}`,
+                    message: "Url created successfully",
+                    expire: `The link will expire in  ${req.body.expireAt} minutes`
+                }
+            )
+            return;
+        }
+        
         res.status(201).json(
             {
                 url: `${process.env.BASE_URL}/${short_url}`,
