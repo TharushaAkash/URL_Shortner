@@ -10,10 +10,12 @@ export async function createUrl(req, res){
 
         const short_url = nanoid(5);
 
+        //Check expire time exist in request body, if exists convert to number
         const exTime = expireAt ? Number(expireAt) : null;
 
         let expireDate = null;
 
+        //expire time exists and its a number convert to date format
         if(exTime && !isNaN(exTime)){
             expireDate = new Date(Date.now() + exTime * 60 * 1000)
         }
@@ -24,6 +26,7 @@ export async function createUrl(req, res){
             expireAt: expireDate
         })
 
+        //If expire time exist, send expire msg as response
         if(exTime){
             res.status(201).json(
                 {
@@ -35,6 +38,7 @@ export async function createUrl(req, res){
             return;
         }
         
+        //Not exist expire time send only message and short url
         res.status(201).json(
             {
                 url: `${process.env.BASE_URL}/${short_url}`,
@@ -58,6 +62,13 @@ export async function redirectUrl(req, res){
     try{
         const url = await Url.findOne({short_url: req.params.short_url})
         if(url){
+            if(url.expireAt && new Date() > url.expireAt){
+                return res.status(404).json(
+                    {
+                        message: "Url is expired"
+                    }
+                )
+            }
             return res.redirect(url.long_url);
         }
 
@@ -70,7 +81,7 @@ export async function redirectUrl(req, res){
     }catch(err){
         res.status(500).json(
             {
-                message: error.message
+                message: err.message
             }
         )
     }
