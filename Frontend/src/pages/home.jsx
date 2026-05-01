@@ -3,6 +3,7 @@ import { IoCloseCircleSharp } from "react-icons/io5";
 import Header from "../Components/header";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { LifeLine } from "react-loading-indicators";
 
 
 
@@ -10,6 +11,7 @@ export default function HomePage(){
 
     const [url, setUrl] = useState("");
     const [showModel, setShowModel] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setUrl(e.target.value);
@@ -18,6 +20,7 @@ export default function HomePage(){
     async function handleSubmit() {
 
         try{
+            setLoading(true);
             console.log(`url is: ${url}`)
 
             const response = await axios.post(import.meta.env.VITE_API_URI , 
@@ -36,6 +39,8 @@ export default function HomePage(){
             }catch(err){
                 toast.error(err.response.data.message);
 
+            }finally{
+                setLoading(false);
             }
         
         }
@@ -49,6 +54,14 @@ export default function HomePage(){
 
         
         <div className="flex h-screen">
+
+            {/* loading screen */}
+
+            {loading &&(
+                <div className="fixed inset-0 flex justify-center items-center z-50">
+                    <LifeLine color="#32cd32" size="medium" text="" textColor="" />
+                    </div>
+            )}
 
             {/* popup model */}
             {showModel && (
