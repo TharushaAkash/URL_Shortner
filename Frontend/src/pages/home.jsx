@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import Header from "../Components/header";
 import axios from "axios";
@@ -7,6 +7,8 @@ import { Atom } from "react-loading-indicators";
 import { MdOutlineElectricBolt } from "react-icons/md";
 import { HiOutlineLink } from "react-icons/hi";
 import { FaArrowRight } from "react-icons/fa";
+import { FaArrowUp } from "react-icons/fa";
+import { FaArrowDown } from "react-icons/fa";
 
 
 
@@ -16,6 +18,9 @@ export default function HomePage() {
     const [showModel, setShowModel] = useState(false)
     const [loading, setLoading] = useState(false);
     const [expireAt, setExpireAt] = useState("");
+    const [openSetting, setOpenSetting] = useState(false);
+    const [isPassword, setIsPassword] = useState(false);
+    const [password, setPassword] = useState("");
 
 
     const handleChange = (e) => {
@@ -70,7 +75,7 @@ export default function HomePage() {
         } finally {
             setTimeout(() => {
                 setLoading(false);
-            }, 1000);  //1 second timeout added for better smoot loading animation
+            }, 1000);  //1 second timeout added for better smooth loading animation
         }
 
     }
@@ -95,10 +100,10 @@ export default function HomePage() {
 
             {/* popup model */}
             {showModel && (
-                <div className="flex inset-0 fixed bg-accent justify-center items-center">
+                <div className="flex inset-0 fixed bg-accent justify-center items-center z-50 px-4">
 
                     {/* popup Card */}
-                    <div className="w-[400px] h-[200px] bg-white text-center rounded-xl p-3 relative">
+                    <div className="w-full max-w-[400px] bg-white text-center rounded-xl p-3 relative">
                         <h2 className="font-bold text-2xl text-[#05df72] mt-2">Shotend URL</h2>
 
 
@@ -146,65 +151,118 @@ export default function HomePage() {
 
             <Header />
             {/* background */}
-            <div className="w-full h-screen bg-second flex flex-col justify-center items-center">
+            <div className="w-full min-h-screen bg-second flex flex-col justify-center items-center pt-24 px-4 sm:px-6">
 
-                <div className="text-[#8ec5ff] mt-10 bg-[#1b3061] w-[250px] p-2 rounded-2xl flex gap-6 justify-center items-center">
-                    <MdOutlineElectricBolt/>
-                    <h2 className="font-bold text-[#8ec5ff]">Fast & Free URL Shortene</h2>
+                {/* Badge */}
+                <div className="text-[#8ec5ff] mt-10 bg-[#1b3061] w-auto px-4 py-2 rounded-2xl flex gap-3 justify-center items-center">
+                    <MdOutlineElectricBolt />
+                    <h2 className="font-bold text-[#8ec5ff] text-sm sm:text-base">Fast &amp; Free URL Shortener</h2>
                 </div>
 
-               <div className="flex flex-col justify-center items-center mb-20 mt-10">
-                    <h1 className="font-bold text-5xl text-center"><span className="text-white">Free URL Shortner</span><br/>
-                    <span className="text-[#175cfb]">Shorten Links Instantly </span>
+                {/* Hero text */}
+                <div className="flex flex-col justify-center items-center mb-10 mt-8 text-center">
+                    <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl text-center">
+                        <span className="text-white">Free URL Shortner</span><br />
+                        <span className="text-[#175cfb]">Shorten Links Instantly </span>
                     </h1>
 
-                    <p className="text-lg text-slate-500 text-l mt-5 text-center w-[700px]">Create short, memorable URLs in seconds. Track clicks with detailed analytics,
-                    generate QR codes 
-                    and manage all your links in one place — completely free.</p>
+                    <p className="text-base sm:text-lg text-slate-500 mt-5 text-center w-full max-w-[700px]">
+                        Create short, memorable URLs in seconds. Track clicks with detailed analytics,
+                        generate QR codes
+                        and manage all your links in one place — completely free.
+                    </p>
                 </div>
 
                 {/* Input and button box */}
-                <div className="flex  items-center gap-5">
+                <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-5 w-full max-w-[600px]">
 
-                    <div className="w-[400px] relative">
+                    <div className="w-full relative">
                         <input
-                        type="text"
-                        placeholder="Paste your long url here.."
-                        value={url}
-                        name="url"
-                        onChange={handleChange}
-                        required
-                        className="w-full bg-slate-800 text-white px-5 py-4 rounded-2xl  border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                    </input>
+                            type="text"
+                            placeholder="Paste your long url here.."
+                            value={url}
+                            name="url"
+                            onChange={handleChange}
+                            required
+                            className="w-full bg-slate-800 text-white px-5 py-4 rounded-2xl border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                        </input>
 
-                    <div className="text-slate-400 font-bold absolute right-4 top-1/2 -translate-y-1/2">
-                        <HiOutlineLink />
-                    </div>
+                        <div className="text-slate-400 font-bold absolute right-4 top-1/2 -translate-y-1/2">
+                            <HiOutlineLink />
+                        </div>
                     </div>
 
 
                     <button
-                    onClick={handleSubmit} 
-                    className="flex gap-3 bg-[#2158f8] rounded-2xl items-center justify-center w-[150px] h-full text-white relative cursor-pointer hover:bg-transparent hover:border-2 hover:border-[#2158f8] hover:transition-all hover:duration-300">
+                        onClick={handleSubmit}
+                        className="flex gap-3 bg-[#2158f8] rounded-2xl items-center justify-center w-full sm:w-[150px] py-4 text-white cursor-pointer hover:bg-transparent hover:border-2 hover:border-[#2158f8] hover:transition-all hover:duration-300 whitespace-nowrap px-4">
                         Shorten URL
-                        <FaArrowRight  className="font-bold text-lg"/>
+                        <FaArrowRight className="font-bold text-lg" />
                     </button>
 
 
-                 </div>
-                 
+                </div>
 
 
+                {/* Advanced Settings toggle */}
+                <div className="flex gap-2 items-center mt-5 justify-center text-[#8dc4f2] cursor-pointer">
+                    {openSetting ? <FaArrowUp /> : <FaArrowDown />}
+                    <button className="text-[#8dc4f2] cursor-pointer"
+                        onClick={() => {
+                            openSetting ? setOpenSetting(false) : setOpenSetting(true);
+                        }}>Advance Settings</button>
+                </div>
 
 
+                {openSetting && (
+                    <div className="mt-4 bg-slate-800 rounded-2xl p-6 w-full max-w-[600px]">
+                        <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center w-full justify-center">
 
-               
+                            {/* Password Protection */}
+                            <div className="w-full sm:w-1/2">
+                                <div className="flex items-center gap-3 mb-3">
+                                    <input
+                                        type="checkbox"
+                                        onChange={(e) => {
+                                            setIsPassword(e.target.checked);
+                                        }}
+                                        className="scale-150 cursor-pointer"
+                                    ></input>
+                                    <label className="text-white">Password Protection</label>
+                                </div>
+                                <input
+                                    type="password"
+                                    disabled={!isPassword}
+                                    autoComplete="off"
+                                    placeholder="Enter password"
+                                    onChange={(e) => {
+                                        setPassword(e.target.value);
+                                    }}
+                                    className={`w-full px-4 py-2 border border-slate-600 rounded-2xl bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 ${isPassword ? 'cursor-text' : 'cursor-not-allowed'}`}
+                                ></input>
+                            </div>
 
-                
+                            {/* Expiration Time */}
+                            <div className="w-full sm:w-1/2">
+                                <div className="flex items-center mb-3">
+                                    <label className="text-white">Expiration Time</label>
+                                </div>
+                                <input
+                                    type="date"
+                                    className="w-full px-4 py-2 border border-slate-600 rounded-2xl bg-slate-700 text-white"
+                                ></input>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                )}
 
             </div>
 
         </div>
+
     )
 }
